@@ -43,7 +43,7 @@ if __name__ == '__main__':
     (id, stw, stw_sanitus, bst, gra, ekl) = results[0]
     db.close()
     # How many characters do we have for the definition?
-    stw_url = urllib.parse.quote(stw.encode('UTF-8'))
+    stw_url = urllib.parse.quote(stw_sanitus.encode('UTF-8'))
     url = f'https://labenz.neutsch.org/{stw_url}'
     ekllen = 500 - len(stw) - len(gra) - len(url) - 3
     if ekllen < 1:
