@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # Create Mastodon client
     mastodon = Mastodon(
         access_token='token.secret',
-        api_base_url = 'https://botsin.space/',
+        api_base_url = 'https://mastodon.social/',
     )
     # Post
     mastodon.toot(text)
