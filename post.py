@@ -45,7 +45,7 @@ if __name__ == '__main__':
     # How many characters do we have for the definition?
     stw_url = urllib.parse.quote(stw_sanitus.encode('UTF-8'))
     url = f'https://labenz.neutsch.org/{stw_url}'
-    ekllen = 500 - len(stw) - len(gra) - len(url) - 3
+    ekllen = 500 - len(stw) - len(gra) - 23 - 3
     if ekllen < 1:
         print(
             'ERROR: no characters left for definition of {stw}',
