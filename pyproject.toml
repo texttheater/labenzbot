@@ -1,0 +1,6 @@
+[project]
+name = "labenzbot"
+version = "0.1.0"
+description = "Posts liffs from labenz.neutsch.org to Mastodon"
+requires-python = ">=3.11"
+dependencies = ['beautifulsoup4', 'Mastodon.py', 'requests']
