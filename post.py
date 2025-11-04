@@ -14,7 +14,7 @@ import requests
 
 def html2txt(html):
     soup = BeautifulSoup(html, 'html.parser')
-    text = ''.join(soup.findAll(string=True))
+    text = ''.join(soup.find_all(string=True))
     text = re.sub(r'\s+', ' ', text)
     return text
 
