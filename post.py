@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 
+import random
 import re
 import sys
 import urllib.parse
@@ -8,7 +9,7 @@ import urllib.parse
 
 from bs4 import BeautifulSoup
 from mastodon import Mastodon
-import mysql.connector
+import requests
 
 
 import config
@@ -16,7 +17,7 @@ import config
 
 def html2txt(html):
     soup = BeautifulSoup(html, 'html.parser')
-    text = ''.join(soup.findAll(text=True))
+    text = ''.join(soup.findAll(string=True))
     text = re.sub(r'\s+', ' ', text)
     return text
 
@@ -27,21 +28,18 @@ def strip_wikilinks(text):
 
 
 if __name__ == '__main__':
-    # Get random tweet from DB
-    db = mysql.connector.connect(host=config.host, user=config.user,
-            password=config.passwd, database=config.db)
-    cursor = db.cursor()
-    cursor.execute("""SELECT id, stw, stw_sanitus,
-            UPPER(LEFT(stw_sortoren, 1)) AS bst, gra, ekl
-            FROM labenz
-            WHERE aufgenommen IS NOT NULL
-            AND veroeffentlicht IS NOT NULL
-            AND original = 0
-            ORDER BY RAND()
-            LIMIT 0,1""")
-    results = cursor.fetchall()
-    (id, stw, stw_sanitus, bst, gra, ekl) = results[0]
-    db.close()
+    # Get random liff from API
+    r = requests.get('https://labenz.neutsch.org/api.php')
+    r.raise_for_status()
+    liffs = r.json()
+    liff = random.choice(liffs)
+    # Populate fields
+    id = liff['id']
+    stw = liff['stw']
+    stw_sanitus = liff['stw_sanitus']
+    bst = liff['bst']
+    gra = liff['gra']
+    ekl = liff['ekl']
     # How many characters do we have for the definition?
     stw_url = urllib.parse.quote(stw_sanitus.encode('UTF-8'))
     url = f'https://labenz.neutsch.org/{stw_url}'
