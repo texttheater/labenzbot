@@ -12,9 +12,6 @@ from mastodon import Mastodon
 import requests
 
 
-import config
-
-
 def html2txt(html):
     soup = BeautifulSoup(html, 'html.parser')
     text = ''.join(soup.findAll(string=True))
